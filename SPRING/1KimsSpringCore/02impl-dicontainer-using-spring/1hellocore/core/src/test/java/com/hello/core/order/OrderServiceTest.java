@@ -22,11 +22,11 @@ public class OrderServiceTest {
     @Test
     void Order (){
         Long memberId = 1L;
-        Member memberA = new Member(1L, "memberA", Grade.VIP);
+        Member memberA = new Member(memberId, "memberA", Grade.VIP);
         memberService.join(memberA);
 
         Order order = orderService.createOrder(1L, "Dragon", 5000);
 
-        Assertions.assertThat(order.getDiscountPrice()).isEqualTo(1000);
+        Assertions.assertThat(order.getDiscountPrice()).isEqualTo(500);
     }
 }

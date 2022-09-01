@@ -3,36 +3,56 @@ package com.hello.core;
 import com.hello.core.discount.DiscountPolicy;
 import com.hello.core.discount.FixDiscountPolicy;
 import com.hello.core.discount.RateDiscountPolicy;
+import com.hello.core.member.MemberRepository;
 import com.hello.core.member.MemberService;
 import com.hello.core.member.MemberServiceImpl;
 import com.hello.core.member.MemoryMemberRepository;
 import com.hello.core.order.OrderService;
 import com.hello.core.order.OrderServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 
 /**
  * DIP (의존관계 역전의 원칙을 지키기 위해, 실제 동작에 필요한 구현 객체를 Appconfig에서 생성해줌.)
  * @author chanhyeok
  */
+@Configuration
 public class AppConfig {
 
-    // 멤버 서비스에서 필요한 의존성: MemberRepository 인터페이스에서,
+    @Bean
     public MemberService memberService(){
-        return new MemberServiceImpl(getMemberRepository());
+        System.out.println("call AppConfig.memberService");
+        return new MemberServiceImpl(memberRepository());
     }
 
-    private MemoryMemberRepository getMemberRepository() {
+    @Bean
+    public MemberRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
 
+    @Bean
     public OrderService orderService(){
-        return new OrderServiceImpl(getMemberRepository(), getDiscountPolicy());
+        System.out.println("call AppConfig.orderService");
+        return new OrderServiceImpl(memberRepository(), getDiscountPolicy());
+//        return null;
     }
 
+//    @Bean //
+    /**
+     * 리턴되는 RateDiscountPolicy 통합 테스트에서 AutoConfig의 RateDiscountPolicy와 충돌 발생
+     * 전반적인 테스트에는 문제 없으나, 싱글톤을 확인하기 위한 테스트 코드에서 올바른 값을 얻기 위해선 @Bean을 다시 등록해줘야함
+     * @return 가상화되지 않은 새로 생성된 RateDiscountPolicy객체, 싱글톤을 보장하지 못함.
+     */
     public DiscountPolicy getDiscountPolicy(){
         return new RateDiscountPolicy();
     }
 
+    @Bean
+    public MemoryMemberRepository getMemberRepository() {
+        return new MemoryMemberRepository();
+    }
 }
 
 

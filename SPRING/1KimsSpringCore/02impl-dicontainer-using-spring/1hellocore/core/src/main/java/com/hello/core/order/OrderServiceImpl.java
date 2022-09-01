@@ -1,8 +1,15 @@
 package com.hello.core.order;
 
+import com.hello.core.annotation.MainDiscountPolicy;
 import com.hello.core.discount.DiscountPolicy;
+import com.hello.core.discount.RateDiscountPolicy;
 import com.hello.core.member.Member;
 import com.hello.core.member.MemberRepository;
+import com.hello.core.member.MemberService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -14,20 +21,27 @@ import com.hello.core.member.MemberRepository;
  * @Author chanHyeok
  */
 
+@Component
 public class OrderServiceImpl implements OrderService{
     private final MemberRepository memberRepository;
-    private final DiscountPolicy rateDiscountPolicy;
+    private final DiscountPolicy discountPolicy;
 
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy rateDiscountPolicy) {
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy){
         this.memberRepository = memberRepository;
-        this.rateDiscountPolicy = rateDiscountPolicy;
+        this.discountPolicy = discountPolicy;
     }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
         Member member = memberRepository.findById(memberId);
-        int discountPrice = rateDiscountPolicy.discount(member, itemPrice); // 단일책임 원칙 충족
+        int discountPrice = discountPolicy.discount(member, itemPrice); // 단일책임 원칙 충족
 
         return new Order(memberId, itemName, itemPrice, discountPrice);
+    }
+
+    // 테스트 용도
+    public MemberRepository getMemberRepository(){
+        return memberRepository;
     }
 }

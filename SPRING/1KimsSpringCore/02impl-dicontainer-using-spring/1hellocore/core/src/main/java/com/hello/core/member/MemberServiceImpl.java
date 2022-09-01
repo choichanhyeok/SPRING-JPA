@@ -1,6 +1,9 @@
 package com.hello.core.member;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 /**
  *  AppConfig를 이용한 의존성 주입 테스트를 위해 작성한 memberServiceImpl
  *  MemberRepository를 주입받는다. MemberRepositry에 대한 구현체는 AppConfig에서 관리하기에
@@ -8,11 +11,13 @@ package com.hello.core.member;
  * @Author chanHyeok
  */
 
-
+@Component
 public class MemberServiceImpl implements MemberService{
     //    private final MemberRepository memberRepository = new MemoryMemberRepository(); => 객체를 직접 생성했을 때 에시를 위해 만든 구문,
     //                                                                                       아래 생성자 주입으로 대체됌
     private final MemberRepository memberRepository;
+
+    @Autowired//  ac.getBean(MemberRepository.class)처럼 동작
     public MemberServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
@@ -25,5 +30,10 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public Member findMember(Long memberId) {
         return memberRepository.findById(memberId);
+    }
+
+    // 테스트 용도
+    public MemberRepository getMemberRepository() {
+        return memberRepository;
     }
 }
