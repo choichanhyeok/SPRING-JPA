@@ -1,7 +1,7 @@
 # SPRING-JPA
 
 <details>
-  <summary><h3>1. 스프링 핵심 원리 학습 기록</h3></summary>
+  <summary><h3>1. 스프링 핵심 원리 내용 정리</h3></summary>
 <div markdown="2">
   
   > 1. [[SPRING-CORE]순수한 자바 코드를 이용한 DI에서 스프링을 이용한 DI로](https://blog.naver.com/cksgurwkd12/222844316041)
