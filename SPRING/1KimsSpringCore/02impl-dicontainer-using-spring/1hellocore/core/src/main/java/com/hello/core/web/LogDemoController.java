@@ -14,14 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class LogDemoController {
     private final LogDemoService logDemoService;
-    // private final MyLogger myLogger;
-    private final ObjectProvider<MyLogger> myLoggerProvider; // MyLogger를 주입 받는게 아니라 빈을 찾아주는 Provider를 초기화
+     private final MyLogger myLogger; // => 기존에 오류 났던 코드 그냥 써버림
+//    private final ObjectProvider<MyLogger> myLoggerProvider; // MyLogger를 주입 받는게 아니라 빈을 찾아주는 Provider를 초기화
 
     @RequestMapping("log-demo")
     @ResponseBody
     public String logDemo(HttpServletRequest request) throws InterruptedException {
         String requestURL = request.getRequestURL().toString();
-        MyLogger myLogger = myLoggerProvider.getObject(); // 필요한 시점에 DL을 이용해 MyLogger 빈의 의존성을 주입함
+        // ObjectProvider을 사용하는 아래 코드 제거
+//        MyLogger myLogger = myLogger.getObject(); // 필요한 시점에 DL을 이용해 MyLogger 빈의 의존성을 주입함
+        System.out.println("mylog = " + myLogger.getClass());
         myLogger.setRequestURL(requestURL);
 
         myLogger.log("controller test");
