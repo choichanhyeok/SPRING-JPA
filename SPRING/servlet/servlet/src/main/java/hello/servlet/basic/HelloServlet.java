@@ -23,6 +23,6 @@ public class HelloServlet extends HttpServlet {
         response.setContentType("text/plain");
         response.setCharacterEncoding("utf-8"); // UC-KR 같은 애들 말고 요즘은 다 utf-8 써야함.
         response.getWriter().write("hello " + username);
-        
+
     }
 }
