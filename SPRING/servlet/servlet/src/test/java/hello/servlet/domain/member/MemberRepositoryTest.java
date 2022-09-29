@@ -44,7 +44,6 @@ class MemberRepositoryTest{
         //then
         Assertions.assertThat(result).contains(member1, member2);
     }
-
 }
 
 
