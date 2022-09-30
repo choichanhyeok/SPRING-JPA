@@ -27,5 +27,4 @@ public class MvcMemberListServlet extends HttpServlet {
         RequestDispatcher dispatcher = req.getRequestDispatcher(viewPath);
         dispatcher.forward(req, resp);
     }
-
 }
