@@ -23,9 +23,9 @@ public class FrontControllerservletV3 extends HttpServlet {
     private Map<String, ControllerV3> controllerV3Map = new HashMap<>();
 
     public FrontControllerservletV3() {
-        controllerV3Map.put("/front-controller/v4/members/new-form", new MemberFormControllerV3());
-        controllerV3Map.put("/front-controller/v4/members", new MemberListControllerV3());
-        controllerV3Map.put("/front-controller/v4/members/save", new MemberSaveControllerV3());
+        controllerV3Map.put("/front-controller/v3/members/new-form", new MemberFormControllerV3());
+        controllerV3Map.put("/front-controller/v3/members", new MemberListControllerV3());
+        controllerV3Map.put("/front-controller/v3/members/save", new MemberSaveControllerV3());
     }
 
     @Override   // HttpServlet 호출시 service
