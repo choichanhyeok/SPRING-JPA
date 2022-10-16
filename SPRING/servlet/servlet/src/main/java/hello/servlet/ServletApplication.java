@@ -1,5 +1,6 @@
 package hello.servlet;
 
+import hello.servlet.web.springmvc.v1.SpringMemberFormControllerV1;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -17,4 +18,9 @@ public class ServletApplication {
 //	InternalResourceViewResolver internalResourceViewResolver(){
 //		return new InternalResourceViewResolver("/WEB-INF/views/", ".jsp");
 //	}
+
+//	@Bean
+//	SpringMemberFormControllerV1 springMemberFormControllerV1(){
+//		return new SpringMemberFormControllerV1();
+//	};
 }
