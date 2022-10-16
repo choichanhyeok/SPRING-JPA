@@ -25,6 +25,11 @@ public class MyView {
         dispatcher.forward(req, resp);
     }
 
+    /**
+     * request에 setAttribute로 model의 값을 넘겨줌
+     * @param model
+     * @param req
+     */
     private void modelToRequestAttribute(Map<String, Object> model, HttpServletRequest req) {
         model.forEach((key, value) -> req.setAttribute(key, value));
     }

@@ -37,19 +37,25 @@ public class FrontControllerServletV5 extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        // 1. getHandler를 통해 http 요청에 맞는 핸들러를 호출
         Object handler = getHandler(req);
 
-        // TODO 2-1. 예외처리: 해당 url과 매핑된 컨트롤러가 없을 경우
+        // 1-2 HTTP request가 넘어온 url에 매핑되는 핸들러가 없을 경우
         if (handler == null){
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
 
+        // 2. 핸들러를 넘겨서 관련 어뎁터 추출
         MyHandlerAdapter adapter = getHandlerAdapter(handler);
+
+        // 3. 어뎁터를 통한 핸들링
         ModelView mv = adapter.handle(req, resp, handler);
 
+        // 4. ModelView로부터 viewName 추출 이후 ViewResolver를 통해 물리적 주소 도출
         String viewName = mv.getViewName();
-        MyView view = viewResolver(viewName);
+        MyView view = viewResolver(viewName);  // /front-controller/v5/v3/members/new-form
+                                               // /WEB-INF/views/front-controller/v5/v3/members/new-form.jsp
 
         view.render(mv.getModel(), req, resp);
     }
