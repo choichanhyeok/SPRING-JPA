@@ -1,9 +1,11 @@
 package hello.springmvc.basic;
 
 
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Setter
+@Getter
+@AllArgsConstructor
 public class HelloData {
     private String username;
     private int age;
