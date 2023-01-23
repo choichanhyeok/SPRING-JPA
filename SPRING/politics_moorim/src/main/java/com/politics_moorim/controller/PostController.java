@@ -22,9 +22,8 @@ return "Hi, hyeok i'm your first commercial project";
     }
 
     @PostMapping("")
-    public Map<String, String> post(@RequestBody @Valid PostCreate request){
+    public void post(@RequestBody @Valid PostCreate request){
         postService.write(request);
-        return Map.of();
     }
 
 }

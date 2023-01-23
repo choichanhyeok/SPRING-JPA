@@ -48,6 +48,7 @@ class PostControllerTest {
                             .content(json)
                         )
                 .andExpect(status().isOk())
+                .andExpect(content().string(""))
                 .andDo(print());
     }
 
