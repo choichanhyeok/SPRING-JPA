@@ -1,17 +1,19 @@
 package com.politics_moorim.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.politics_moorim.domain.Post;
 import com.politics_moorim.repository.PostRepository;
+import com.politics_moorim.request.PostCreate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -19,12 +21,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 //@WebMvcTest
 @AutoConfigureMockMvc // (2) SpringbootTest만 이용하면 MockMvc를 주입받을 수 없어 @WebMvcTest 안에서 MockMvc를 긁어오는 @AutoCOnfigureMockMvc를 직접 적용
-@SpringBootTest       // (1) WebMvcTest로는 서비스, 레포지토리에 대한 테스트를 할 수 없음
+@SpringBootTest       // (1) WebMvcTest로는 a서비스, 레포지토리에 대한 테스트를 할 수 없음
 class PostControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private ObjectMapper objectMapper;
     @BeforeEach
     void clean(){
         postRepository.deleteAll();
@@ -33,10 +37,15 @@ class PostControllerTest {
     @Test
     @DisplayName("/posts 요청시 사용자의 게시글 저장")
     void postCallTest() throws Exception {
+        // given
+        PostCreate request = PostCreate.builder().title("제목입니다.").content("내용입니다.").build();
+        String json = objectMapper.writeValueAsString(request);
 
+
+        // expected
         mockMvc.perform(post("/posts")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content("{\"title\": \"제목입니다.\", \"content\":  \"내용입니다.\"}")
+                            .contentType(APPLICATION_JSON)
+                            .content(json)
                         )
                 .andExpect(status().isOk())
                 .andDo(print());
@@ -45,10 +54,14 @@ class PostControllerTest {
     @Test
     @DisplayName("/posts로 post 요청시 title 값을 필수 !")
     void postVaildTest() throws Exception {
+        // given
+        PostCreate request = PostCreate.builder().title(null).content("내용입니다.").build();
+        String json = objectMapper.writeValueAsString(request);
 
+        // expected
         mockMvc.perform(post("/posts")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\": null, \"content\":  \"내용입니다.\"}")
+                        .contentType(APPLICATION_JSON)
+                        .content(json)
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("400"))
@@ -60,10 +73,14 @@ class PostControllerTest {
     @Test
     @DisplayName("/posts로 post 요청시 DB에 값이 저장된다.")
     void postDbInsertTest() throws Exception {
+        // given
+        PostCreate request = PostCreate.builder().title("제목입니다.").content("내용입니다.").build();
+        String json = objectMapper.writeValueAsString(request);
+
         // when
         mockMvc.perform(post("/posts")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\": \"제목입니다.\", \"content\":  \"내용입니다.\"}")
+                        .contentType(APPLICATION_JSON)
+                        .content(json)
                 )
                 .andExpect(status().isOk())
                 .andDo(print());
