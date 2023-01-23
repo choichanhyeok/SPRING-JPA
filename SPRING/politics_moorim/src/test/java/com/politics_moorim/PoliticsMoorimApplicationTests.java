@@ -8,6 +8,7 @@ class PoliticsMoorimApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }
