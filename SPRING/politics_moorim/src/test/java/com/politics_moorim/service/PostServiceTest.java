@@ -3,6 +3,7 @@ package com.politics_moorim.service;
 import com.politics_moorim.domain.Post;
 import com.politics_moorim.repository.PostRepository;
 import com.politics_moorim.request.PostCreate;
+import com.politics_moorim.response.PostResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,12 +58,12 @@ class PostServiceTest {
         postRepository.save(requestPost);
 
         // when
-        Post post = postService.get(requestPost.getId());
+        PostResponse postResponse = postService.get(requestPost.getId());
 
         // then
-        assertNotNull(post);
-        assertEquals("foo", post.getTitle());
-        assertEquals("bar", post.getContent());
+        assertNotNull(postResponse);
+        assertEquals("foo", postResponse.getTitle());
+        assertEquals("bar", postResponse.getContent());
     }
 
 }
