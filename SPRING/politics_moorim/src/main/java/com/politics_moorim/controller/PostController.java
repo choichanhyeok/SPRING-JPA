@@ -1,5 +1,6 @@
 package com.politics_moorim.controller;
 
+import com.politics_moorim.domain.Post;
 import com.politics_moorim.request.PostCreate;
 import com.politics_moorim.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -26,4 +27,9 @@ return "Hi, hyeok i'm your first commercial project";
         postService.write(request);
     }
 
+    @GetMapping("{postId}")
+    public Post get(@PathVariable(name = "postId") Long id) {
+        Post post = postService.get(id);
+        return post;
+    }
 }
