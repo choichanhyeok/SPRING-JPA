@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,9 +29,15 @@ return "Hi, hyeok i'm your first commercial project";
         postService.write(request);
     }
 
+    // 조회용 API
+    // 단건조회 말고 전건 조회
+    @GetMapping("")
+    public List<PostResponse> getList(){
+        return postService.getList();
+    }
+
     @GetMapping("{postId}")
     public PostResponse get(@PathVariable(name = "postId") Long id) {
-        PostResponse postResponse = postService.get(id);
-        return postResponse;
+        return postService.get(id);
     }
 }
