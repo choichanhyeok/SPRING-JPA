@@ -25,7 +25,7 @@
         <th>etc</th>
     </tr>
 <!--    뒤의 Stat 변수는 생략 가능 user + Stat 이름으로 알아서 생성-->
-    <tr th:each="user, userStat : ${users}">  
+    <tr th:each="user, userStat : ${users}">
         <td th:text="${userStat.count}">username</td>
         <td th:text="${user.username}">username</td>
         <td th:text="${user.age}">0</td>
