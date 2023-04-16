@@ -6,6 +6,8 @@ import com.politics_moorim.response.PostResponse;
 import com.politics_moorim.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,8 +34,8 @@ return "Hi, hyeok i'm your first commercial project";
     // 조회용 API
     // 단건조회 말고 전건 조회
     @GetMapping("")
-    public List<PostResponse> getList(){
-        return postService.getList();
+    public List<PostResponse> getList(Pageable pageable){
+        return postService.getList(pageable);
     }
 
     @GetMapping("{postId}")
