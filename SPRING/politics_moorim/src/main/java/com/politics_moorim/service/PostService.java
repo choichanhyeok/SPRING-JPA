@@ -4,6 +4,7 @@ package com.politics_moorim.service;
 import com.politics_moorim.domain.Post;
 import com.politics_moorim.repository.PostRepository;
 import com.politics_moorim.request.PostCreate;
+import com.politics_moorim.request.PostSearch;
 import com.politics_moorim.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,9 +42,9 @@ public class PostService {
                 .build();
     }
 
-    public List<PostResponse> getList(Pageable pageable){
+    public List<PostResponse> getList(PostSearch postSearch){
 //        Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "id"));
-        return postRepository.findAll(pageable).stream()
+        return postRepository.getList(postSearch).stream()
                 .map(PostResponse::new)
                 .collect(Collectors.toList());
 

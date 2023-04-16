@@ -3,6 +3,7 @@ package com.politics_moorim.service;
 import com.politics_moorim.domain.Post;
 import com.politics_moorim.repository.PostRepository;
 import com.politics_moorim.request.PostCreate;
+import com.politics_moorim.request.PostSearch;
 import com.politics_moorim.response.PostResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,9 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -77,7 +75,7 @@ class PostServiceTest {
     @DisplayName("글 1 페이지 조회")
     void test3(){
         // given
-        List<Post> requestPosts = IntStream.range(1, 31)
+        List<Post> requestPosts = IntStream.range(1, 30)
                 .mapToObj(i -> {
                     return Post.builder()
                             .title("최찬혁 제목 " + i)
@@ -87,14 +85,17 @@ class PostServiceTest {
                 .collect(Collectors.toList());
         postRepository.saveAll(requestPosts);
 
-        Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "id");
+//        Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "id");
+        PostSearch postSearch = PostSearch.builder()
+                .page(1)
+                .build();
+
         // when
-        List<PostResponse> posts = postService.getList(pageable);
+        List<PostResponse> posts = postService.getList(postSearch);
 
         // then
-        assertEquals(5L, posts.size());
-        assertEquals("최찬혁 제목 30", posts.get(0).getTitle());
-        assertEquals("최찬혁 제목 26", posts.get(4).getTitle());
+        assertEquals(10L, posts.size());
+        assertEquals("최찬혁 제목 29", posts.get(0).getTitle());
+        assertEquals("최찬혁 제목 25", posts.get(4).getTitle());
     }
-
 }

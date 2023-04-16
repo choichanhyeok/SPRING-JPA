@@ -2,6 +2,7 @@ package com.politics_moorim.controller;
 
 import com.politics_moorim.domain.Post;
 import com.politics_moorim.request.PostCreate;
+import com.politics_moorim.request.PostSearch;
 import com.politics_moorim.response.PostResponse;
 import com.politics_moorim.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +35,8 @@ return "Hi, hyeok i'm your first commercial project";
     // 조회용 API
     // 단건조회 말고 전건 조회
     @GetMapping("")
-    public List<PostResponse> getList(Pageable pageable){
-        return postService.getList(pageable);
+    public List<PostResponse> getList(@ModelAttribute PostSearch postSearch){
+        return postService.getList(postSearch);
     }
 
     @GetMapping("{postId}")
