@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.politics_moorim.domain.Post;
 import com.politics_moorim.repository.PostRepository;
 import com.politics_moorim.request.PostCreate;
+import com.politics_moorim.request.PostEdit;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,8 +21,7 @@ import java.util.stream.IntStream;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -153,5 +153,31 @@ class PostControllerTest {
                 .andExpect(jsonPath("$[0].title").value("최찬혁 제목 29"))
                 .andExpect(jsonPath("$[0].content").value("개발자중에 왕 29"))
                 .andDo(print());
+    }
+
+    @Test
+    @DisplayName("글 제목 수정")
+    void test7() throws Exception{
+        // given
+        Post post = Post.builder()
+                .title("최찬혁")
+                .content("오늘 하루도 공부할 수 있어 크게 감사합니다.")
+                .build();
+        postRepository.save(post);
+
+        PostEdit postEdit = PostEdit.builder()
+                .title("개발자중에 왕 최찬혁")
+                .content("오늘 하루도 공부할 수 있어 크게 감사합니다.")
+                .build();
+
+        // expected
+        mockMvc.perform(patch("/posts/{postId}", post.getId()) // 요청 경로
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(postEdit)))
+                .andExpect(status().isOk())
+                .andDo(print());
+
+
+
     }
 }

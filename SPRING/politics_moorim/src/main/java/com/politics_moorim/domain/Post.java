@@ -1,9 +1,7 @@
 package com.politics_moorim.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.politics_moorim.request.PostEdit;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -26,4 +24,20 @@ public class Post {
         this.title = title;
         this.content = content;
     }
+
+    public PostEditor.PostEditorBuilder toEditor(){
+        return PostEditor.builder()
+                .title(title)
+                .content(content);
+
+    }
+
+    public void edit(PostEditor postEditor){
+        title = postEditor.getTitle();
+        content = postEditor.getContent();
+    }
+//    public void change(String title, String content){
+//        this.title = title;
+//        this.content = content;
+//    }
 }

@@ -2,8 +2,10 @@ package com.politics_moorim.service;
 
 
 import com.politics_moorim.domain.Post;
+import com.politics_moorim.domain.PostEditor;
 import com.politics_moorim.repository.PostRepository;
 import com.politics_moorim.request.PostCreate;
+import com.politics_moorim.request.PostEdit;
 import com.politics_moorim.request.PostSearch;
 import com.politics_moorim.response.PostResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,5 +63,22 @@ public class PostService {
 //                            .content(post.getContent())
 //                            .build())
 //                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void edit(Long id, PostEdit postEdit){
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+
+        PostEditor.PostEditorBuilder postEditorbuilder = post.toEditor();
+
+        PostEditor postEditor = postEditorbuilder.title(postEdit.getTitle())
+                .content(postEdit.getContent())
+                .build();
+
+        post.edit(postEditor);
+
+        // post.change(postEdit.getTitle(), postEdit.getContent());
+        // postRepository.save(post); // @Transactional을 쓰면 얘 없어도 알아서 커밋 쳐줌
     }
 }

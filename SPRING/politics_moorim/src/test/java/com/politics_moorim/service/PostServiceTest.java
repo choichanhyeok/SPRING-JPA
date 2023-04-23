@@ -3,6 +3,7 @@ package com.politics_moorim.service;
 import com.politics_moorim.domain.Post;
 import com.politics_moorim.repository.PostRepository;
 import com.politics_moorim.request.PostCreate;
+import com.politics_moorim.request.PostEdit;
 import com.politics_moorim.request.PostSearch;
 import com.politics_moorim.response.PostResponse;
 import org.junit.jupiter.api.Assertions;
@@ -97,5 +98,51 @@ class PostServiceTest {
         assertEquals(10L, posts.size());
         assertEquals("최찬혁 제목 29", posts.get(0).getTitle());
         assertEquals("최찬혁 제목 25", posts.get(4).getTitle());
+    }
+
+
+    @Test
+    @DisplayName("글 제목 수정")
+    void test4(){
+        // given
+        Post post = Post.builder()
+                .title("개발자중에 왕 최찬혁")
+                .content("오늘 하루도 공부할 수 있어 크게 감사합니다.")
+                .build();
+
+        postRepository.save(post);
+        PostEdit postEdit = PostEdit.builder()
+                .title("개발자중에 최강 왕 최찬혁")
+                .build();
+        // when
+        postService.edit(post.getId(), postEdit);
+
+        // then
+        Post changedPost = postRepository.findById(post.getId())
+                .orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. id = " + post.getId()));
+        Assertions.assertEquals("개발자중에 최강 왕 최찬혁", changedPost.getTitle());
+    }
+    @Test
+    @DisplayName("글 내용 수정")
+    void test5(){
+        // given
+        Post post = Post.builder()
+                .title("개발자중에 왕 최찬혁")
+                .content("오늘 하루도 공부할 수 있어 크게 감사합니다.")
+                .build();
+
+        postRepository.save(post);
+        PostEdit postEdit = PostEdit.builder()
+                .title("개발자중에 최강 왕 최찬혁")
+                .content("오늘 하루도 공부할 수 있어 크게 감사합니다. 지상 최강의 개발자 최찬혁.")
+                .build();
+        // when
+        postService.edit(post.getId(), postEdit);
+
+        // then
+        Post changedPost = postRepository.findById(post.getId())
+                .orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. id = " + post.getId()));
+        Assertions.assertEquals("개발자중에 최강 왕 최찬혁", changedPost.getTitle());
+        Assertions.assertEquals("오늘 하루도 공부할 수 있어 크게 감사합니다. 지상 최강의 개발자 최찬혁.", changedPost.getContent());
     }
 }

@@ -2,6 +2,7 @@ package com.politics_moorim.controller;
 
 import com.politics_moorim.domain.Post;
 import com.politics_moorim.request.PostCreate;
+import com.politics_moorim.request.PostEdit;
 import com.politics_moorim.request.PostSearch;
 import com.politics_moorim.response.PostResponse;
 import com.politics_moorim.service.PostService;
@@ -42,5 +43,10 @@ return "Hi, hyeok i'm your first commercial project";
     @GetMapping("{postId}")
     public PostResponse get(@PathVariable(name = "postId") Long id) {
         return postService.get(id);
+    }
+
+    @PatchMapping("/{postId}")
+    public void edit(@PathVariable Long postId, @RequestBody @Valid PostEdit request){
+        postService.edit(postId, request);
     }
 }
