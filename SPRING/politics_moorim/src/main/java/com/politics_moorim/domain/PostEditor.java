@@ -6,8 +6,8 @@ import lombok.Getter;
 
 @Getter
 public class PostEditor {
-    private final String title;
-    private final String content;
+    private String title;
+    private String content;
 
     @Builder
     public PostEditor(String title, String content) {

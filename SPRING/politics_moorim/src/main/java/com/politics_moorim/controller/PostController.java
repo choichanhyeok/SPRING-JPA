@@ -49,4 +49,9 @@ return "Hi, hyeok i'm your first commercial project";
     public void edit(@PathVariable Long postId, @RequestBody @Valid PostEdit request){
         postService.edit(postId, request);
     }
+
+    @DeleteMapping("/{postId}")
+    public void delete(@PathVariable Long postId){
+        postService.delete(postId);
+    }
 }
