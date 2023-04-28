@@ -36,6 +36,10 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "/Users/choechanhyeog/study/SPRING-JPA/SPRING/message/build.gradle",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "spring.configuration.checksum": "c266fc852aac1a2fd6868a9715d4ae15"
   }
 }]]></component>
@@ -56,7 +60,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1682394062773</updated>
-      <workItem from="1682394064813" duration="185000" />
+      <workItem from="1682394064813" duration="2018000" />
     </task>
     <servers />
   </component>

@@ -1,6 +1,7 @@
 package com.politics_moorim.service;
 
 import com.politics_moorim.domain.Post;
+import com.politics_moorim.exception.PostNotFound;
 import com.politics_moorim.repository.PostRepository;
 import com.politics_moorim.request.PostCreate;
 import com.politics_moorim.request.PostEdit;
@@ -162,5 +163,58 @@ class PostServiceTest {
         Assertions.assertEquals(0, postRepository.count());
     }
 
+    @Test
+    @DisplayName("글 1개 조회")
+    void test8(){
+        // given
+        Post post = Post.builder()
+                .title("개발자중에 왕")
+                .content("그 이름 최찬혁")
+                .build();
 
+        postRepository.save(post);
+
+        // expected
+        Assertions.assertThrows(PostNotFound.class, () ->{
+            postService.get(post.getId() + 1L);
+        });
+    }
+
+    @Test
+    @DisplayName("글 1개 삭제")
+    void test9(){
+        // given
+        Post post = Post.builder()
+                .title("개발자중에 왕")
+                .content("그 이름 최찬혁")
+                .build();
+        postRepository.save(post);
+
+        // expected
+        Assertions.assertThrows(PostNotFound.class, () ->{
+            postService.delete(post.getId()+1L);
+        });
+    }
+
+    @Test
+    @DisplayName("글 1개 업데이트")
+    void test7(){
+        // given
+        Post post = Post.builder()
+                .title("개발자중에 왕")
+                .content("그 이름 최찬혁")
+                .build();
+
+        postRepository.save(post);
+
+        PostEdit postEdit = PostEdit.builder()
+                .title("개발자중에 왕")
+                .content("그 이름 최찬혁")
+                .build();
+        
+        // expected
+        Assertions.assertThrows(PostNotFound.class, () ->{
+            postService.edit(post.getId() + 1L, postEdit);
+        });
+    }
 }

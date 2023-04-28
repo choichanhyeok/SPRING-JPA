@@ -3,6 +3,7 @@ package com.politics_moorim.service;
 
 import com.politics_moorim.domain.Post;
 import com.politics_moorim.domain.PostEditor;
+import com.politics_moorim.exception.PostNotFound;
 import com.politics_moorim.repository.PostRepository;
 import com.politics_moorim.request.PostCreate;
 import com.politics_moorim.request.PostEdit;
@@ -36,7 +37,7 @@ public class PostService {
 
     public PostResponse get(Long id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다.")); // 가능하면 옵셔널 같은 데이터는 가져와서 바로 꺼내는게 좋음
+                .orElseThrow(() -> new PostNotFound()); // 가능하면 옵셔널 같은 데이터는 가져와서 바로 꺼내는게 좋음
 
         return PostResponse.builder()
                 .id(post.getId())
@@ -68,7 +69,7 @@ public class PostService {
     @Transactional
     public void edit(Long id, PostEdit postEdit){
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+                .orElseThrow(() -> new PostNotFound());
 
         PostEditor.PostEditorBuilder postEditorbuilder = post.toEditor();
 
@@ -84,7 +85,7 @@ public class PostService {
 
     public void delete(Long id){
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+                .orElseThrow(() -> new PostNotFound() );
 
         postRepository.delete(post);
     }
