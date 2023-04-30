@@ -1,6 +1,6 @@
 package com.politics_moorim.exception;
 
-public class PostNotFound extends RuntimeException{
+public class PostNotFound extends PoliticMoorimException{
 
     private static final String MESSAGE = "존재하지 않는 글입니다.";
 
@@ -11,4 +11,9 @@ public class PostNotFound extends RuntimeException{
 //    public PostNotFound(Throwable cause) {
 //        super(MESSAGE, cause);
 //    }
+
+    @Override
+    public int getStatusCode() {
+        return 404;
+    }
 }

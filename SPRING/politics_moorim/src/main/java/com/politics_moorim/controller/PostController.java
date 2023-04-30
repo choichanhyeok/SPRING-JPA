@@ -1,6 +1,7 @@
 package com.politics_moorim.controller;
 
 import com.politics_moorim.domain.Post;
+import com.politics_moorim.exception.InvalidRequest;
 import com.politics_moorim.request.PostCreate;
 import com.politics_moorim.request.PostEdit;
 import com.politics_moorim.request.PostSearch;
@@ -30,6 +31,7 @@ return "Hi, hyeok i'm your first commercial project";
 
     @PostMapping("")
     public void post(@RequestBody @Valid PostCreate request){
+        request.validate();
         postService.write(request);
     }
 

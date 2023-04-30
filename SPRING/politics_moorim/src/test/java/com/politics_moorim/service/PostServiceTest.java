@@ -211,7 +211,7 @@ class PostServiceTest {
                 .title("개발자중에 왕")
                 .content("그 이름 최찬혁")
                 .build();
-        
+
         // expected
         Assertions.assertThrows(PostNotFound.class, () ->{
             postService.edit(post.getId() + 1L, postEdit);

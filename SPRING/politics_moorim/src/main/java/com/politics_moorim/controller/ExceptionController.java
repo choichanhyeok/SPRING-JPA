@@ -1,9 +1,13 @@
 package com.politics_moorim.controller;
 
 
+import com.politics_moorim.exception.InvalidRequest;
+import com.politics_moorim.exception.PoliticMoorimException;
+import com.politics_moorim.exception.PostNotFound;
 import com.politics_moorim.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,4 +36,17 @@ public class ExceptionController {
 
         return response;
     }
+
+
+    @ResponseBody
+    @ExceptionHandler(PoliticMoorimException.class)
+    public ResponseEntity<ErrorResponse> politicMoorimException(PoliticMoorimException e){
+        int statusCode = e.getStatusCode();
+        ErrorResponse response = ErrorResponse.builder().code(String.valueOf(statusCode)).message(e.getMessage()).validation(e.getValidation()).build();
+
+
+        return ResponseEntity.status(statusCode).body(response);
+    }
+
+
 }
