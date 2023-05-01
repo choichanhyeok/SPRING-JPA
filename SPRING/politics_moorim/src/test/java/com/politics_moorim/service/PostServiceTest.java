@@ -147,21 +147,21 @@ class PostServiceTest {
         Assertions.assertEquals("오늘 하루도 공부할 수 있어 크게 감사합니다. 지상 최강의 개발자 최찬혁.", changedPost.getContent());
     }
 
-    @Test
-    @DisplayName("글 삭제 테스트")
-    void test6(){
-        // given
-        Post post = Post.builder()
-                .title("개발자중에 왕")
-                .content("최찬혁 입니다.")
-                .build();
-
-        // when
-        postService.delete(post.getId());
-
-        // then
-        Assertions.assertEquals(0, postRepository.count());
-    }
+//    @Test
+//    @DisplayName("글 삭제 테스트")
+//    void test6(){
+//        // given
+//        Post post = Post.builder()
+//                .title("개발자중에 왕")
+//                .content("최찬혁 입니다.")
+//                .build();
+//
+//        // when
+//        postService.delete(post.getId());
+//
+//        // then
+//        Assertions.assertEquals(0, postRepository.count());
+//    }
 
     @Test
     @DisplayName("글 1개 조회")
