@@ -40,7 +40,8 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "spring.configuration.checksum": "c266fc852aac1a2fd6868a9715d4ae15"
+    "spring.configuration.checksum": "c266fc852aac1a2fd6868a9715d4ae15",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">

@@ -2,21 +2,19 @@ package com.politics_moorim.request;
 
 
 import com.politics_moorim.exception.InvalidRequest;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
 @ToString
 @Getter
+@NoArgsConstructor
 public class PostCreate {
     @NotBlank(message = "타이틀을 입력해주세요.")
-    private final String title;
+    private String title;
 
     @NotBlank(message = "콘텐츠를 입력해주세요.")
-    private final String content;
+    private String content;
 
     @Builder
     public PostCreate(String title, String content){
